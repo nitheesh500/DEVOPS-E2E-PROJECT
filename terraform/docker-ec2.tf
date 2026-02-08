@@ -16,8 +16,8 @@
 
 resource "aws_instance" "this" {
   ami                    = "ami-0532be01f26a3de55" # This is our devops-practice AMI ID
-  vpc_security_group_ids = [aws_security_group.allow_all_docker.id]
-  instance_type          = "t3.large"
+  vpc_security_group_ids = [aws_security_group.allow_all.id]
+  instance_type          = "t2.large"
 
   instance_market_options {
     market_type = "spot"
@@ -29,7 +29,7 @@ resource "aws_instance" "this" {
   }
   # 20GB is not enough
   root_block_device {
-    volume_size = 50  # Set root volume size to 50GB
+    volume_size = 38  # Set root volume size to 50GB
     volume_type = "gp3"  # Use gp3 for better performance (optional)
   }
   user_data = file("bootstrap.sh")
@@ -39,7 +39,7 @@ resource "aws_instance" "this" {
 }
 
 
-resource "aws_security_group" "allow_all_docker" {
+resource "aws_security_group" "allow_all" {
   name        = "allow_all_docker"
   description = "Allow TLS inbound traffic and all outbound traffic"
 
@@ -50,12 +50,7 @@ resource "aws_security_group" "allow_all_docker" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+ 
 
   egress {
     from_port   = 0
@@ -68,6 +63,6 @@ resource "aws_security_group" "allow_all_docker" {
     Name = "allow_tls"
   }
 }
-output "docker_ip" {
+output "vm_ip" {
   value       = aws_instance.this.public_ip
 }

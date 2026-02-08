@@ -64,19 +64,6 @@ Jenkins (CI Pipeline)
 
 ---
 
-## 📁 Repository Structure
-
-```
-spring-petclinic/
-├── src/
-├── Dockerfile
-├── Jenkinsfile
-├── pom.xml
-├── .dockerignore
-└── README.md
-
-```
-
 
 > Kubernetes manifests are maintained in a **separate GitOps repository**.
 
@@ -162,26 +149,6 @@ SonarQube runs as:
 - Image vulnerability scanning with Trivy
 - Quality gates enforced via SonarQube
 - GitOps for controlled deployments
-
----
-
-## 🎯 Learning Outcomes
-
-By completing this project, you will understand:
-
-- How real CI pipelines are structured
-- How GitOps works with Argo CD
-- How to integrate code quality and security scans
-- How to monitor Spring Boot applications in Kubernetes
-- How DevOps tools fit together in production
-
----
-
-
-
-## 🧠 Interview Ready Statement
-
-> “This project implements a full DevOps lifecycle using Jenkins for CI, Argo CD for GitOps-based CD, Kubernetes for orchestration, and Prometheus/Grafana for monitoring, following real production patterns.”
 
 ---
 

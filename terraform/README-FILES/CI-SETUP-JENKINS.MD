@@ -126,7 +126,11 @@ Add Docker registry credentials in Jenkins:
 - Username: DockerHub username
 - Password: DockerHub password or access token
 
-
+### 5 Github  Credentials
+- Kind: `Username/Password`
+- ID: `github-creds`
+- Username: github username
+- Password: PAT
 
 ---
 
@@ -149,7 +153,7 @@ Checkout
 → Update Manifest Repo
 
 ```
-
+### Refer to [Jenkins Script](https://github.com/nitheesh500/spring-petclinic-mono/blob/40c5669f4000ce9d19496567cec99417ac7b58ab/Jenkinsfile)
 ---
 
 ## 🧪 Test Strategy
@@ -201,10 +205,6 @@ After CI completion:
 - Image tag is updated in the **Kubernetes manifest repository**
 - Argo CD automatically deploys the new version to EKS
 
-Refer to the **CD / GitOps README** for deployment details.
+Refer to the [CD Setup Documentation](https://github.com/nitheesh500/DEVOPS-E2E-PROJECT/blob/c5e35fb4d2f9cf8b5448b96a69a6ecbb0b6e7d52/terraform/README-FILES/CD-SETUP.MD) for deployment details.
 
 ---
-
-## 📌 Notes
-
-> This CI setup is designed for **learning and interview preparation**, but closely mirrors **real-world enterprise pipelines**.

@@ -21,7 +21,6 @@ Developer / CI
 # SonarQube Setup & CI Integration Guide (Docker + Jenkins)
 
 This document explains the **complete working process of SonarQube** using **Docker**, **PostgreSQL**, and **Jenkins CI**.  
-The setup is production-aligned and suitable for **real DevOps pipelines**.
 
 ---
 
@@ -78,20 +77,7 @@ PostgreSQL Database
 - Open port **9000**
 
 ---
-
-## ⚠️ Mandatory Kernel Configuration
-
-SonarQube uses **Elasticsearch**, which requires:
-
-```bash
-vm.max_map_count = 262144
-```
-
-Apply permanently:
-```
-sysctl -w vm.max_map_count=262144
-echo "vm.max_map_count=262144" >> /etc/sysctl.conf
-```
+# *steps are added in bootstrap.sh file*
 
 ## 🐳 SonarQube Installation (Docker)
 ### Step 1: Create Docker network
