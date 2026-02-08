@@ -99,65 +99,65 @@ curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 |
 # -----------------------------
 # Trivy
 # -----------------------------
-# cat <<EOF >/etc/yum.repos.d/trivy.repo
-# [trivy]
-# name=Trivy
-# baseurl=https://aquasecurity.github.io/trivy-repo/rpm/releases/\$basearch/
-# enabled=1
-# gpgcheck=1
-# gpgkey=https://aquasecurity.github.io/trivy-repo/rpm/public.key
-# EOF
+cat <<EOF >/etc/yum.repos.d/trivy.repo
+[trivy]
+name=Trivy
+baseurl=https://aquasecurity.github.io/trivy-repo/rpm/releases/\$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=https://aquasecurity.github.io/trivy-repo/rpm/public.key
+EOF
 
-# dnf install -y trivy
+dnf install -y trivy
 
-# # -----------------------------
-# # SonarQube REQUIREMENTS
-# # -----------------------------
+# -----------------------------
+# SonarQube REQUIREMENTS
+# -----------------------------
 
-# # Kernel tuning for Elasticsearch
-# sysctl -w vm.max_map_count=262144
-# echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+# Kernel tuning for Elasticsearch
+sysctl -w vm.max_map_count=262144
+echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 
-# # Docker network
-# docker network create sonar-net || true
+# Docker network
+docker network create sonar-net || true
 
-# # PostgreSQL (REQUIRED)
-# docker run -d \
-#   --name sonar-postgres \
-#   --network sonar-net \
-#   --restart unless-stopped \
-#   -e POSTGRES_USER=sonar \
-#   -e POSTGRES_PASSWORD=sonar \
-#   -e POSTGRES_DB=sonarqube \
-#   -v sonar_pg_data:/var/lib/postgresql/data \
-#   postgres:15
+# PostgreSQL (REQUIRED)
+docker run -d \
+  --name sonar-postgres \
+  --network sonar-net \
+  --restart unless-stopped \
+  -e POSTGRES_USER=sonar \
+  -e POSTGRES_PASSWORD=sonar \
+  -e POSTGRES_DB=sonarqube \
+  -v sonar_pg_data:/var/lib/postgresql/data \
+  postgres:15
 
-# # SonarQube volumes
-# docker volume create sonarqube_data
-# docker volume create sonarqube_extensions
-# docker volume create sonarqube_logs
+# SonarQube volumes
+docker volume create sonarqube_data
+docker volume create sonarqube_extensions
+docker volume create sonarqube_logs
 
-# # SonarQube server
-# docker run -d \
-#   --name sonarqube \
-#   --network sonar-net \
-#   --restart unless-stopped \
-#   -p 9000:9000 \
-#   -e SONAR_JDBC_URL=jdbc:postgresql://sonar-postgres:5432/sonarqube \
-#   -e SONAR_JDBC_USERNAME=sonar \
-#   -e SONAR_JDBC_PASSWORD=sonar \
-#   -v sonarqube_data:/opt/sonarqube/data \
-#   -v sonarqube_extensions:/opt/sonarqube/extensions \
-#   -v sonarqube_logs:/opt/sonarqube/logs \
-#   sonarqube:9.9-community
+# SonarQube server
+docker run -d \
+  --name sonarqube \
+  --network sonar-net \
+  --restart unless-stopped \
+  -p 9000:9000 \
+  -e SONAR_JDBC_URL=jdbc:postgresql://sonar-postgres:5432/sonarqube \
+  -e SONAR_JDBC_USERNAME=sonar \
+  -e SONAR_JDBC_PASSWORD=sonar \
+  -v sonarqube_data:/opt/sonarqube/data \
+  -v sonarqube_extensions:/opt/sonarqube/extensions \
+  -v sonarqube_logs:/opt/sonarqube/logs \
+  sonarqube:9.9-community
 
 
-# curl -L https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz \
-# -o /tmp/gitleaks.tar.gz && tar -xzf /tmp/gitleaks.tar.gz -C /tmp && sudo mv /tmp/gitleaks /usr/local/bin/ \
-# && sudo chmod +x /usr/local/bin/gitleaks
-# curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 \
-#   -o /usr/local/bin/gitleaks
-# chmod +x /usr/local/bin/gitleaks
+curl -L https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz \
+-o /tmp/gitleaks.tar.gz && tar -xzf /tmp/gitleaks.tar.gz -C /tmp && sudo mv /tmp/gitleaks /usr/local/bin/ \
+&& sudo chmod +x /usr/local/bin/gitleaks
+curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 \
+  -o /usr/local/bin/gitleaks
+chmod +x /usr/local/bin/gitleaks
 
 echo "BOOTSTRAP COMPLETED – REBOOTING"
 
