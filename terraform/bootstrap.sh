@@ -155,9 +155,7 @@ docker run -d \
 curl -L https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz \
 -o /tmp/gitleaks.tar.gz && tar -xzf /tmp/gitleaks.tar.gz -C /tmp && sudo mv /tmp/gitleaks /usr/local/bin/ \
 && sudo chmod +x /usr/local/bin/gitleaks
-curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 \
-  -o /usr/local/bin/gitleaks
-chmod +x /usr/local/bin/gitleaks
+
 
 echo "BOOTSTRAP COMPLETED – REBOOTING"
 

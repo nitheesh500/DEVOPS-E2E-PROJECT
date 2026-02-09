@@ -65,10 +65,10 @@ Navigate to **Manage Jenkins → Tools**
 - Name: `maven3`
 - MAVEN_HOME: `/usr/share/maven`
 
-#### sonar
+<!-- #### sonar
 - Name: sonar-server
 - Server URL: http://<sonarqube-ip>:9000
-- Authentication Token: add via Jenkins credentials
+- Authentication Token: add via Jenkins credentials -->
 
 ---
 
